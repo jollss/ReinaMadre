@@ -1,0 +1,107 @@
+
+<script>
+function LimpiaEspacios(Obj)
+{
+var texto = Obj.value;
+//limpiamos de espacios en blanco el texto
+var texto_limpio = texto.replace(/^\s+|\s+$/g,"");
+
+if (texto_limpio=="")
+{
+Obj.value = "";
+Obj.focus();
+return true;
+}
+else
+{
+return false;
+}
+}
+
+function valida_form()
+{
+if (LimpiaEspacios(document.frm.nombre))
+{
+alert("No se permiten espacios en blanco en el Nombre ");
+return false;
+}
+
+if (LimpiaEspacios(document.frm.apellidos))
+{
+alert("No se permiten espacios en blanco en Apellidos ");
+return false;
+}
+
+
+if (LimpiaEspacios(document.frm.mensaje))
+{
+alert("Faltan campos");
+return false;
+}
+return true;
+}
+
+</script>
+<script>
+function validaNumericos(event) {
+    if(event.charCode >= 48 && event.charCode <= 57){
+      return true;
+     }
+     return false;
+}
+</script>
+<body>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<form name="frm" action="" method="post">
+
+  <center>
+  <div class="row">
+      <div class="col-xs-2">Nombre:
+        <input type="text" name="nombre" required>
+       </div>
+       <div class="col-xs-2">
+         Apellidos:
+      <input type="text" name="apellidos" required>
+      </div>
+  </div>
+  </center>
+  <br/><br/>
+<center>
+<div class="row">
+    <div class="col-xs-2">Telefono:
+      <input type="text" maxlength="10"  onkeypress='return validaNumericos(event)'  required/>
+     </div>
+     <div class="col-xs-2">
+       Correo:
+    <input type="email" name="mail" required>
+    </div>
+</div>
+</center>
+<br/><br/>
+
+
+<center>
+<div class="row">
+    <div class="col-xs-2">semana:
+      <select name="select" class="form-control" required>
+          <option value="" >selecciona Semana</option>
+        <option value="4">semena 4</option>
+        <option value="value2" >Value 2</option>
+        <option value="value3">Value 3</option>
+      </select>
+     </div>
+     <div class="col-xs-2">
+       Sucursal:
+       <select name="select" class="form-control" required>
+           <option value="" >selecciona</option>
+         <option value="value1">Toluca</option>
+         <option value="value2" >Patriotismo</option>
+
+       </select>
+    </div>
+</div>
+</center>
+<br><br>
+<input type="submit" onclick="return valida_form()" value="Aceptar" />
+</form>

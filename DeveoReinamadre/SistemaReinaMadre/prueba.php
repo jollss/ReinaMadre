@@ -1,0 +1,155 @@
+<?php
+include ('../conexiones/Localhost.php');#agregar la conexion a sql
+$data = json_decode(file_get_contents('php://input'));#imprimir el json
+
+$answersw = $data->form_response->definition->title;#objeto para obtener el titulo de la encuesta typeform
+$preubadeid=$data->form_response->form_id;#traemos el id para insertarlo una vez creada la DB para hacer update sobre ese id
+
+$url1 = preg_replace('[\s+]',"", $answersw);
+echo $url1;
+$consultaurl = mysqli_query($mysqliL, "SELECT nombre_encuesta as url,idurl FROM url WHERE nombre_encuesta = '$url1'");
+$row = mysqli_fetch_assoc($consultaurl);
+  $nombreurl = $row['url'];
+  $idurl = $row['idurl'];
+  if($nombreurl!=''){
+    $sqlssss1 = "UPDATE url SET idformulario='$preubadeid' WHERE idurl='$idurl'";
+
+
+     $resultqqd = $mysqliL->query($sqlssss1);
+  }
+
+
+
+$submitted_ats = $data->form_response->submitted_at;#fecha de envio
+$dates = strtotime($submitted_ats);#Analice cualquier descripción de fecha y hora textual en inglés en una marca de tiempo Unix
+$submitted_at=date('Y-m-d H:i:s', $dates);#la convierto a la fecha que ira en la DB  echo $answers;
+$landed_ats = $data->form_response->landed_at;#fecha de aterrisaje
+$dates1 = strtotime($submitted_ats);#Analice cualquier descripción de fecha y hora textual en inglés en una marca de tiempo Unix
+$landed_at=date('Y-m-d H:i:s', $dates1);
+$cds = $respuestas = $data->form_response->definition->fields;#llamo al objeto que contiene las preguntas print_r($cds);
+$result123 = mysqli_query($mysqliL, "SELECT count(*) as total FROM $preubadeid");
+$total=$result123->num_rows;
+$cdswdw212 = $respuestas = $data->form_response;
+
+//if($total==''){
+  $query="CREATE TABLE $preubadeid #ingreso la variable answer que trae el nombre de la encuesta
+    (id_$preubadeid int  (11) PRIMARY KEY AUTO_INCREMENT NOT NULL )";#agrego el id que sera autoincrementable con el nombre de la encuesta sin espacios
+
+  mysqli_query($mysqliL, $query);
+    //if(mysqli_query($mysqliL, $query)){#valido si es correcto o no la creacion de la base de datos
+        //echo "Base de datos creada correctamente";
+        foreach ($cds as $cd){#inicio iteracion del objeto para traer su atributos
+        $id=$cd->id;#id del formulario
+        $title=$cd->title;#titulo de la encuesta
+
+        $type=$cd->type;#tipo de dato que se tiene para los encabezados
+
+        if($type=='long_text'){#valido que tipo de dato es para concaternarlo al correcto al DB
+        $long_text="ALTER TABLE $preubadeid#linea para alterar la tabla
+        ADD COLUMN $id varchar (250)";#valor para agregar el campo + el tipo
+        mysqli_query($mysqliL, $long_text);#ejecutar la consulta
+    }elseif($type=='yes_no'){
+      $yes_no="ALTER TABLE $preubadeid
+      ADD COLUMN $id varchar(50) ";
+
+      mysqli_query($mysqliL, $yes_no);#ejecutar la consulta
+    }
+    elseif($type=='phone_number'){
+      $phone_number="ALTER TABLE $preubadeid
+      ADD COLUMN $id varchar(20) ";
+      mysqli_query($mysqliL, $phone_number);#ejecutar la consulta
+
+      }
+      elseif($type=='number'){
+        $number="ALTER TABLE $preubadeid
+        ADD COLUMN $id varchar (10)";
+          mysqli_query($mysqliL, $number);#ejecutar la consulta
+
+        }
+        elseif($type=='dropdown'){
+          $dropdown="ALTER TABLE $preubadeid
+          ADD COLUMN $id varchar (250)";
+            mysqli_query($mysqliL, $dropdown);#ejecutar la consulta
+        }
+        elseif($type=='multiple_choice'){
+       $multiple_choice="ALTER TABLE $preubadeid
+       ADD COLUMN $id varchar (500)";
+
+      mysqli_query($mysqliL, $multiple_choice);#ejecutar la consulta
+        }
+        elseif($type=='picture_choice'){
+          $picture_choice="ALTER TABLE $preubadeid
+          ADD COLUMN $id varchar (300)";
+            mysqli_query($mysqliL, $picture_choice);#ejecutar la consulta
+
+        }
+        elseif($type=='opinion_scale'){
+          $opinion_scale="ALTER TABLE $preubadeid
+          ADD COLUMN $id varchar (50)";
+
+            mysqli_query($mysqliL, $opinion_scale);#ejecutar la consulta
+
+        }
+        elseif($type=='short_text'){
+
+          $short_text="ALTER TABLE $preubadeid
+          ADD COLUMN $id varchar (250)";
+
+            mysqli_query($mysqliL,$short_text);#ejecutar la consulta
+
+            ///////////////////////
+
+        }
+
+
+
+        }#cierre de ciclo for
+
+        $qlanded_atw="ALTER TABLE $preubadeid
+        ADD COLUMN fecha_aterrizaje  DATETIME ";
+
+        mysqli_query($mysqliL, $qlanded_atw);
+
+        $qsubmitted_atw="ALTER TABLE $preubadeid
+        ADD COLUMN fecha_envio DATETIME ";
+          mysqli_query($mysqliL, $qsubmitted_atw);
+          $form_id="ALTER TABLE $preubadeid
+          ADD COLUMN idform  varchar(150) ";
+mysqli_query($mysqliL, $form_id);
+          $cds1=$respuestas = $data->form_response->answers;
+
+
+
+            foreach ($cds1 as $cds124)
+            {
+
+$idrespuesrtas[]=$cds124->field->id;
+
+              $choicerespuesta =$cds124->choice->label;#respuesta
+            $choicesrespuestas =$cds124->choices->labels;#respuesta
+$yesno =$cds124->bolean;#respuesta
+$otherrespuestas =$cds124->choices->other;
+$textrespuestas =$cds124->text;#respuesta
+$numberrespuestas =$cds124->number;#respuesta
+$res[]=$choicerespuesta.implode (",",$choicesrespuestas).$textrespuestas.$numberrespuestas.$yesno.$otherrespuestas;
+//Joelteamjoelyslilis1821
+
+            }
+
+            $a="";
+            $a .= implode("','",$res);
+            $a .= "";
+
+            $fecha_aterrizaje='fecha_aterrizaje';
+            $fecha_envio='fecha_envio';
+            $idform='idform';
+        $insert = "INSERT  into $preubadeid (";
+        $insert.= implode(",",$idrespuesrtas);
+        $insert.= ",$fecha_aterrizaje,$fecha_envio,$idform) values ('$a','$submitted_at','$landed_at','$preubadeid')";
+
+        $query = mysqli_query($mysqliL,$insert);
+
+
+
+?>
+|

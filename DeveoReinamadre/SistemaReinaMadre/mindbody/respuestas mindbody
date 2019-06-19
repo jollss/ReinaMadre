@@ -1,0 +1,147 @@
+llamdas en soapui rest
+Headers y Autentication-----------------------------------------------------------------------------------------
+URL:https://mb-api.mindbodyonline.com/push/api/v1/subscriptions
+hedears y autenticaciones
+Authentication:ReinaMadrewebhooks
+API-Key:03b848a2d6654073909f781181dbc8f4
+SiteId:296701
+Content-type:application/json
+crear evento de cliente
+Body---------------------------------------------------------------------------------------------------------
+{
+    "eventIds" : [
+        "client.created"
+    ],
+    "eventSchemaVersion" : 1,
+    "referenceId" : "",
+    "webhookUrl" : "https://www.myreinamadre.mx/DeveoReinaMadre/SistemaReinaMadre/mindbody/respuestamindbodyclientecreado.php"
+}
+respuesta -------------------------------------------------------------------------------------------------
+HTTP/1.1 201 Created
+
+DATE=Mon, 22 Apr 2019 19:00:41 GMT
+
+Content-TYPE=application/json; CHARSET=utf-8
+
+Content-LENGTH=503
+
+CONNECTION=keep-alive
+
+SERVER=Microsoft-IIS/8.5
+
+X-Powered-BY=ASP.NET
+
+
+
+{"messageSignatureKey":"Z3Vgr/NFXGxWsdRaiLmH2G7CqNVoYVHccLNcMPMY9Kg=",
+"subscriptionId":"73b3c9cd-775f-4c8b-a216-af64ab0c1864",
+"status":"PendingActivation","subscriptionCreationDateTime":
+"2019-04-22T07:00:41Z","statusChangeDate":"2019-04-22T07:00:41Z",
+"statusChangeMessage":NULL,"statusChangeUser":"ReinaMadre","eventIds":["client.created"],
+"eventSchemaVersion":1.0,"referenceId":"",
+"webhookUrl":"https://www.myreinamadre.mx/DeveoReinaMadre/SistemaReinaMadre/mindbody/respuestamindbodyclientecreado.php"}
+
+-------------------------------------------------------------------------------------------------------------------------------------------
+HTTP/1.1 200 OK
+
+Date=Mon, 22 Apr 2019 19:09:37 GMT
+
+Content-Type=application/json; charset=utf-8
+
+Content-Length=479
+
+Connection=keep-alive
+
+Server=Microsoft-IIS/8.5
+
+X-Powered-By=ASP.NET
+
+
+
+{"subscriptionId":"73b3c9cd-775f-4c8b-a216-af64ab0c1864","status":"Active",
+"subscriptionCreationDateTime":"2019-04-22T07:00:41Z","statusChangeDate":"2019-04-22T07:09:37Z",
+"statusChangeMessage":"ReinaMadre changed status from PendingActivation to Active","statusChangeUser":"ReinaMadre",
+"eventIds":["client.created"],"eventSchemaVersion":1.0,"referenceId":"","webhookUrl":
+"https://www.myreinamadre.mx/DeveoReinaMadre/SistemaReinaMadre/mindbody/respuestamindbodyclientecreado.php"}
+
+
+
+
+
+
+
+
+
+
+
+**************************************************************************************************************
+Generar url en estatus pendiente
+tipo de envio post
+url:https://mb-api.mindbodyonline.com/push/api/v1/subscriptions
+header y autenticaciones
+Authentication:ReinaMadrewebhooks
+API-Key:03b848a2d6654073909f781181dbc8f4
+SiteId:296701
+Content-type:application/json
+body
+{
+    "eventIds" : [
+        "staff.deactivated"
+    ],
+    "eventSchemaVersion" : 1,
+    "referenceId" : "",
+    "webhookUrl" : "https://www.myreinamadre.mx/DeveoReinaMadre/SistemaReinaMadre/mindbody/staffdeactivated.php"
+}
+**********************************************************************************************************************
+Acticar url y cambiar estatus a activo
+tipo de envio patch
+url:https://mb-api.mindbodyonline.com/push/api/v1/subscriptions/1b879688-9534-43c3-a3fb-7e50c4b2da0d
+header y autenticaciones
+Authentication:ReinaMadrewebhooks
+API-Key:03b848a2d6654073909f781181dbc8f4
+SiteId:296701
+Content-type:application/json
+body
+{
+    "Status": "Active",
+    "WebhookUrl": "https://www.myreinamadre.mx/DeveoReinaMadre/SistemaReinaMadre/mindbody/staffdeactivated.php"
+}
+***********************************************************************************************************************
+-----------------------------------------------------------------------------------------------------------------------
+location creada
+Respuesta
+{"messageSignatureKey":"ydJZjTbtmKaa+eZlaGbhnc12bW9SVpKfI3Tgf9GPJy0=",
+"subscriptionId":"1b879688-9534-43c3-a3fb-7e50c4b2da0d",
+"status":"PendingActivation",
+"subscriptionCreationDateTime":"2019-04-23T07:42:31Z","statusChangeDate":"2019-04-23T07:42:31Z","statusChangeMessage":null,"statusChangeUser":"ReinaMadre","eventIds":["staff.deactivated"],"eventSchemaVersion":1.0,"referenceId":"",
+"webhookUrl":"https://www.myreinamadre.mx/DeveoReinaMadre/SistemaReinaMadre/mindbody/staffdeactivated.php"}
+
+
+staff.deactivated
+staff.updated
+staff.created
+clientSale.created
+clientContract.cancelled
+clientContract.updated
+clientContract.created
+clientMembershipAssignment.cancelled
+clientMembershipAssignment.created
+clientProfileMerger.created
+classDescription.updated
+classWaitlistRequest.cancelled
+classWaitlistRequest.created
+classRosterBooking.cancelled
+classRosterBookingStatus.updated
+classRosterBooking.created
+class.updated
+classSchedule.cancelled
+classSchedule.updated
+classSchedule.created
+appointmentBooking.cancelled
+appointmentBooking.created
+client.updated
+client.deactivated
+client.created
+location.created
+location.updated
+location.deactivated
